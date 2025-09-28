@@ -21,6 +21,7 @@ int time;
 int beats;
 bool fanBlow = false;
 bool canAdd = true;
+bool fanSwitch = true;
 
 void setup()
 {
@@ -92,8 +93,11 @@ void loop()
     digitalWrite(LED, LOW);
     digitalWrite(BUZZER, LOW);
   }
-  if (beats % 5 == 0) {
+  if (beats % 5 == 0 && fanSwitch) {
     fanBlow = !fanBlow;
+    fanSwitch = false;
+  }if (beats % 5 != 0) {
+    fanSwitch = true;
   }
 
   //digitalWrite(3, HIGH);
