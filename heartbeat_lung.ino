@@ -1,8 +1,5 @@
 int signal;
 bool read = false;
-bool timed = false;
-int currentMillis;
-int timeDiff;
 int highest;
 
 const int LED = 3;
@@ -16,8 +13,6 @@ const int enB = 11;
 const int in3 = 12;
 const int in4 = 13;
 
-const int speed = 60;
-int time;
 int beats;
 bool fanBlow = false;
 bool canAdd = true;
@@ -37,25 +32,14 @@ void setup()
 
 void loop()
 {
-  time = millis()/1000 - timeDiff;
   signal = analogRead(A0);
   if (signal == 0) {
     read = true;
-    //timeDiff = millis()/1000;
   }if (signal > 800 && read == true) {
     read = false;
   }
 
   Serial.println("Signal: " + String(signal) + " reading: " + String(read) + " beats: " + String(beats) + " blow: " + String(fanBlow));
-  //Serial.println(String(time));
-  //Serial.println("Tme Diff: " + String(timeDiff));
-  
-  // if (read == true && time < 3) {
-  //   highest = 0;
-  //   if (signal > highest) {
-  //     highest = signal;
-  //   }
-  // }
 
   if (read) {
     analogWrite(enA, 255);
@@ -93,13 +77,13 @@ void loop()
     digitalWrite(LED, LOW);
     digitalWrite(BUZZER, LOW);
   }
-  if (beats % 5 == 0 && fanSwitch) {
+  if (beats % 3 == 0 && fanSwitch) {
     fanBlow = !fanBlow;
     fanSwitch = false;
-  }if (beats % 5 != 0) {
+  }if (beats % 3 != 0) {
     fanSwitch = true;
   }
 
-  //digitalWrite(3, HIGH);
   delay(10);
 }
+
